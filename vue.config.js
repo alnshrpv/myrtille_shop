@@ -1,23 +1,37 @@
-const { defineConfig } = require('@vue/cli-service');
+const { defineConfig } = require('@vue/cli-service')
 
 module.exports = defineConfig({
-  chainWebpack: config => {
-    // Убедитесь, что devtool соответствует требованиям Webpack 5
-    config.devtool('source-map');
-  },
-
   transpileDependencies: true,
-
-  devServer: {
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    historyApiFallback: true,
-    hot: true,
-    open: true
-  },
 
   pluginOptions: {
     vuetify: {
-      // настройки Vuetify, если необходимо
+      // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
     }
-  }
+  },
+
+  chainWebpack: config => {
+    config.plugin('html').tap(args => {
+      args[0].hash = true;
+      return args;
+    });
+  },
+
+  configureWebpack: {
+    output: {
+      filename: 'js/[name].[contenthash:8].js',
+      chunkFilename: 'js/[name].[contenthash:8].js'
+    }
+  },
+
+  devServer: {
+    historyApiFallback: true,
+  },
+
+  outputDir: 'dist',
+
+  assetsDir: 'assets',
+
+  filenameHashing: true,
+
+  productionSourceMap: false,
 });
