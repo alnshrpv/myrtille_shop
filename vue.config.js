@@ -1,5 +1,11 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require('@vue/cli-service');
+
 module.exports = defineConfig({
+  chainWebpack: config => {
+    // Убедитесь, что devtool соответствует требованиям Webpack 5
+    config.devtool('source-map');
+  },
+
   transpileDependencies: true,
 
   devServer: {
@@ -11,7 +17,7 @@ module.exports = defineConfig({
 
   pluginOptions: {
     vuetify: {
-			// https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
-		}
+      // настройки Vuetify, если необходимо
+    }
   }
-})
+});
